@@ -3,6 +3,7 @@
     "description": "Tools to help you get around the filesystem with PHP.",
     "version": "0.0.1",
     "type": "library",
+    "keywords": ["filesystem", "php", "php filesystem", "directory", "php directory", "helper", "php helper"],
     "autoload": {
         "psr-4": {
             "PhpFs\\": "src/",
@@ -15,6 +16,7 @@
             "email": "code@john-at-work.de"
         }
     ],
+    "license": "MIT",
     "minimum-stability": "dev",
     "require": {
         "php": "^7.4 || ^8.0"
