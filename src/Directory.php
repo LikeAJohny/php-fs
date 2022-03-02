@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpFilesystem;
+namespace PhpFs;
 
-use PhpFilesystem\Exception\DirectoryException;
+use PhpFs\Exception\DirectoryException;
 
 class Directory
 {

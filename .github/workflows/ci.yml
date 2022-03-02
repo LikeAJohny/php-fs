@@ -1,4 +1,4 @@
-name: PhpFilesystem CI
+name: PhpFs CI
 
 on: push
 
