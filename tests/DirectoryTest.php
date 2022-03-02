@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FilesystemHelperTest;
+namespace PhpFilesystemTest;
 
-use FilesystemHelper\Directory;
+use PhpFilesystem\Directory;
 use PHPUnit\Framework\TestCase;
 
 class DirectoryTest extends TestCase

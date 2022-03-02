@@ -1,12 +1,12 @@
 {
-    "name": "likeajohny/filesystem-helper",
+    "name": "likeajohny/php-filesystem",
     "description": "Tools to help you get around the filesystem with PHP.",
     "version": "0.0.1",
     "type": "library",
     "autoload": {
         "psr-4": {
-            "FilesystemHelper\\": "src/",
-            "FilesystemHelperTest\\": "tests/"
+            "PhpFilesystem\\": "src/",
+            "PhpFilesystemTest\\": "tests/"
         }
     },
     "authors": [

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FilesystemHelper\Exception;
+namespace PhpFilesystem\Exception;
 
 use RuntimeException;
 

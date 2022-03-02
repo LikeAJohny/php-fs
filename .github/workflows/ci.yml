@@ -1,4 +1,4 @@
-name: FilesystemHelper CI
+name: PhpFilesystem CI
 
 on: push
 
