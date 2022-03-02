@@ -1,0 +1,27 @@
+{
+    "name": "likeajohny/filesystem-helper",
+    "description": "Tools to help you get around the filesystem with PHP.",
+    "version": "0.0.1",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "FilesystemHelper\\": "src/",
+            "FilesystemHelperTest\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "LikeAJohny",
+            "email": "code@john-at-work.de"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox"
+    }
+}

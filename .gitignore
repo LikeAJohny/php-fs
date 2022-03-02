@@ -1,0 +1,7 @@
+/.idea/
+/.composer/
+/vendor/
+/tests/artifacts/
+
+.DS_Store
+*.cache
