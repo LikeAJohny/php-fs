@@ -1,7 +1,7 @@
 {
     "name": "likeajohny/php-fs",
     "description": "Tools to help you get around the filesystem with PHP.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "type": "library",
     "keywords": ["filesystem", "php", "php filesystem", "directory", "php directory", "helper", "php helper"],
     "autoload": {
