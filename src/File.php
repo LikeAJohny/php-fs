@@ -20,6 +20,18 @@ class File
         return (bool) $resource;
     }
 
+    public static function write(string $file, string $content): bool
+    {
+        self::validate($file);
+
+        return (bool) file_put_contents($file, $content);
+    }
+
+    public static function read(string $file): string
+    {
+        return file_get_contents($file);
+    }
+
     public static function remove(string $file): bool
     {
         self::validate($file);

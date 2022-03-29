@@ -28,6 +28,26 @@ class FileTest extends TestCase
         File::create(self::ARTIFACTS . '/dir-does-not-exist/cool-story-bro.txt');
     }
 
+    public function testCanWriteToExistingFile(): void
+    {
+        $file = self::ARTIFACTS . '/cool-story-bro.txt';
+        File::create($file);
+
+        $this->assertTrue(File::write($file, 'Tell me more, lol x3'));
+    }
+
+    public function testCanReadFromExistingFile(): void
+    {
+        $file = self::ARTIFACTS . '/cool-story-bro.txt';
+        File::create($file);
+        File::write($file, 'Tell me more, lol x3');
+
+        $this->assertEquals(
+            'Tell me more, lol x3',
+            File::read($file)
+        );
+    }
+
     public function testCanCopyFileToExistingDirectory(): void
     {
         $file = self::FIXTURES . '/content/first-level.txt';
