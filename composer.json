@@ -26,10 +26,10 @@
   "license": "MIT",
   "minimum-stability": "dev",
   "require": {
-    "php": "^7.3 || ^8.0"
+    "php": "^8.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^9.6"
   },
   "scripts": {
     "test": "vendor/bin/phpunit --testdox"
