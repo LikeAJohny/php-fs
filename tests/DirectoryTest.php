@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class DirectoryTest extends TestCase
 {
-    private const FIXTURES  = './tests/fixtures';
+    private const FIXTURES = './tests/fixtures';
     private const ARTIFACTS = './tests/artifacts';
 
     public function testCanRecursivelyCreateDirectory(): void
@@ -74,5 +74,34 @@ class DirectoryTest extends TestCase
         Directory::remove(self::ARTIFACTS);
 
         $this->assertDirectoryDoesNotExist($dir);
+    }
+
+    public function testCanRecursivelyListDirectoryContentsWithFullPaths(): void
+    {
+        $dir = self::FIXTURES . '/content';
+
+        $expectedList = [
+            $dir => [
+                'first-level.txt',
+                $dir . '/sub-directory' => [
+                    'second-level.txt',
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expectedList, Directory::list($dir));
+    }
+
+    public function testCanListFirstLevelDirectoryContentsWithFullPaths(): void
+    {
+        $dir = self::FIXTURES . '/content';
+
+        $expectedList = [
+            $dir => [
+                'first-level.txt'
+            ],
+        ];
+
+        $this->assertEquals($expectedList, Directory::list($dir, false));
     }
 }

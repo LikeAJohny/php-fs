@@ -6,7 +6,13 @@ namespace PhpFs;
 
 use PhpFs\Exception\DirectoryException;
 
+use function array_diff;
 use function is_dir;
+use function is_file;
+use function mkdir;
+use function rename;
+use function rmdir;
+use function scandir;
 
 class Directory
 {
@@ -80,6 +86,26 @@ class Directory
                 ? self::copy("$source", "$destination")
                 : File::copy("$source", "$destination");
         }
+    }
+
+    public static function list(string $dir, bool $recursive = true): array
+    {
+        self::validate($dir);
+
+        $list = [];
+        $files = array_diff(scandir($dir), ['.', '..']);
+
+        foreach ($files as $file) {
+            $source = "$dir/$file";
+
+            if (is_dir($source) && $recursive) {
+                $list[$dir][$source] = self::list($source)[$source];
+            } elseif (is_file($source)) {
+                $list[$dir][] = $file;
+            }
+        }
+
+        return $list;
     }
 
     private static function validate(string $dir): void
