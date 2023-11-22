@@ -9,18 +9,19 @@ use Throwable;
 
 use function file_exists;
 use function file_put_contents;
+use function fopen;
 
 class File
 {
     public static function create(string $file): bool
     {
-        try {
-            $resource = fopen($file, 'wb');
-        } catch (Throwable $e) {
-            throw FileException::fileNotCreated($file, $e);
+        $resource = fopen($file, 'wb');
+
+        if (!$resource) {
+            throw FileException::fileNotCreated($file);
         }
 
-        return (bool)$resource;
+        return true;
     }
 
     public static function exists(string $file): bool

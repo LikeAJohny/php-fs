@@ -9,11 +9,11 @@ use Throwable;
 
 class FileException extends RuntimeException
 {
-    public static function fileNotCreated(string $file, Throwable $previous): self
+    public static function fileNotCreated(string $file, Throwable $previous = null): self
     {
         return new self(
             sprintf('The file "%s" could not be created. Maybe you have to create the directory first', $file),
-            $previous->getCode(),
+            $previous?->getCode() ?? 0,
             $previous
         );
     }
