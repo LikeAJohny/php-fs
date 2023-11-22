@@ -19,6 +19,12 @@ class DirectoryTest extends TestCase
         $this->assertDirectoryExists(self::ARTIFACTS);
     }
 
+    public function testDeterminesIfDirectoryExists(): void
+    {
+        $this->assertTrue(Directory::exists(self::FIXTURES . '/content/sub-directory'));
+        $this->assertFalse(Directory::exists(self::FIXTURES . '/content/sub-sub-directory'));
+    }
+
     /**
      * @depends testCanRecursivelyCreateDirectory
      */

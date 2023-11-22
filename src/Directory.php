@@ -6,14 +6,21 @@ namespace PhpFs;
 
 use PhpFs\Exception\DirectoryException;
 
+use function is_dir;
+
 class Directory
 {
-    public static function create(string $dir, int $permissions = 0777, bool $recursive = true): void
+    public static function create(string $dir, int $permissions = 0766, bool $recursive = true): void
     {
         // https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#mkdir-race-condition
         if (!is_dir($dir) && !mkdir($dir, $permissions, $recursive) && !is_dir($dir)) {
             throw DirectoryException::directoryNotCreated($dir);
         }
+    }
+
+    public static function exists(string $dir): bool
+    {
+        return is_dir($dir);
     }
 
     public static function remove(string $dir): bool
@@ -23,7 +30,11 @@ class Directory
         $files = array_diff(scandir($dir), ['.', '..']);
 
         foreach ($files as $file) {
-            (is_dir("$dir/$file")) ? self::remove("$dir/$file") : unlink("$dir/$file");
+            $source = "$dir/$file";
+
+            is_dir("$source")
+                ? self::remove("$source")
+                : File::remove("$source");
         }
 
         return rmdir($dir);
@@ -36,7 +47,11 @@ class Directory
         $files = array_diff(scandir($dir), ['.', '..']);
 
         foreach ($files as $file) {
-            (is_dir("$dir/$file")) ? self::remove("$dir/$file") : unlink("$dir/$file");
+            $source = "$dir/$file";
+
+            is_dir("$source")
+                ? self::remove("$source")
+                : File::remove("$source");
         }
     }
 
@@ -58,9 +73,12 @@ class Directory
         $files = array_diff(scandir($dir), ['.', '..']);
 
         foreach ($files as $file) {
-            (is_dir("$dir/$file"))
-                ? self::copy("$dir/$file", "$targetDir/$file")
-                : copy("$dir/$file", "$targetDir/$file");
+            $source = "$dir/$file";
+            $destination = "$targetDir/$file";
+
+            is_dir("$source")
+                ? self::copy("$source", "$destination")
+                : File::copy("$source", "$destination");
         }
     }
 
