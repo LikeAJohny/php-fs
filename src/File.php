@@ -7,6 +7,9 @@ namespace PhpFs;
 use PhpFs\Exception\FileException;
 use Throwable;
 
+use function file_exists;
+use function file_put_contents;
+
 class File
 {
     public static function create(string $file): bool
@@ -17,14 +20,33 @@ class File
             throw FileException::fileNotCreated($file, $e);
         }
 
-        return (bool) $resource;
+        return (bool)$resource;
+    }
+
+    public static function exists(string $file): bool
+    {
+        return file_exists($file);
     }
 
     public static function write(string $file, string $content): bool
     {
         self::validate($file);
 
-        return (bool) file_put_contents($file, $content);
+        return (bool)file_put_contents($file, $content);
+    }
+
+    public static function append(string $file, string $content): bool
+    {
+        self::validate($file);
+
+        return (bool)file_put_contents($file, self::read($file) . $content);
+    }
+
+    public static function prepend(string $file, string $content): bool
+    {
+        self::validate($file);
+
+        return (bool)file_put_contents($file, $content . self::read($file));
     }
 
     public static function read(string $file): string

@@ -28,12 +28,38 @@ class FileTest extends TestCase
         File::create(self::ARTIFACTS . '/dir-does-not-exist/cool-story-bro.txt');
     }
 
-    public function testCanWriteToExistingFile(): void
+    public function testDeterminesIfFileExists(): void
+    {
+        $this->assertTrue(File::exists(self::FIXTURES . '/content/first-level.txt'));
+        $this->assertFalse(File::exists(self::FIXTURES . '/content/second-level.txt'));
+    }
+
+    public function testCanWriteToNewFile(): void
     {
         $file = self::ARTIFACTS . '/cool-story-bro.txt';
         File::create($file);
 
         $this->assertTrue(File::write($file, 'Tell me more, lol x3'));
+    }
+
+    public function testCanAppendToExistingFile(): void
+    {
+        $file = self::ARTIFACTS . '/test.txt';
+        File::create($file);
+        File::write($file, 'Test');
+
+        $this->assertTrue(File::append($file, ' Me'));
+        $this->assertEquals('Test Me', File::read($file));
+    }
+
+    public function testCanPrependToExistingFile(): void
+    {
+        $file = self::ARTIFACTS . '/test.txt';
+        File::create($file);
+        File::write($file, 'Me');
+
+        $this->assertTrue(File::prepend($file, 'Test '));
+        $this->assertEquals('Test Me', File::read($file));
     }
 
     public function testCanReadFromExistingFile(): void
@@ -46,6 +72,16 @@ class FileTest extends TestCase
             'Tell me more, lol x3',
             File::read($file)
         );
+    }
+
+    public function testCanRemoveFile(): void
+    {
+        $file = self::ARTIFACTS . '/to-be-removed.txt';
+        File::create($file);
+
+        $this->assertFileExists($file);
+        File::remove($file);
+        $this->assertFileDoesNotExist($file);
     }
 
     public function testCanCopyFileToExistingDirectory(): void
