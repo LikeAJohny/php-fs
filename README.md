@@ -1,9 +1,9 @@
 # PHP FS (Filesystem Helpers)
 
 Very basic tools to help you get around the filesystem with PHP.
-
-This package is far from feature complete and only provides the most basic stuff regarding directory & file operations.  
-It is under active development, though. Definitely expect more possibilities in the near future.
+ 
+This package is under active development.  
+If you have any problems, suggestions or wishes, feel free to create an issue to let me know!
 
 ## Install
 
@@ -12,33 +12,32 @@ composer require likeajohny/php-fs
 ```
 
 
-## Features
+## Functions
 
 - Directory
   - create
+  - exists
   - remove
   - empty
-  - copy
   - move
+  - copy
+  - list
 - File
   - create
+  - exists
+  - write
+  - append
+  - prepend
+  - read
   - remove
   - copy
   - move
 
 
-## Usage Examples
-
-### Create a new directory
-
-- 0777 & recursive by default.
-
-```php
-PhpFs\Directory::create('./path/to/directory');
-```
+## File Usage Examples
 
 
-### Create a new file
+### Create A New File
 
 - The directory to create the file in has to exist.
 
@@ -47,7 +46,37 @@ PhpFs\File::create('./filepath/cool-story-bro.txt');
 ```
 
 
-### Remove a directory
+### Write Content To A File
+
+- Writes contents to a given file
+- Overrides pre-existing content in the file
+
+```php
+PhpFs\File::write('./filepath/cool-story-bro.txt', 'Let me tell you a story!');
+```
+
+
+### Append To A File
+
+- Appends content to a given file
+
+```php
+PhpFs\File::append('./filepath/cool-story-bro.txt', "\nAnd the story goes as follows:");
+```
+
+
+### Prepend To A File
+
+- Prepends content to a given file
+
+```php
+PhpFs\File::prepend('./filepath/cool-story-bro.txt', "The stories foreword\n");
+```
+
+
+## Directory Usage Examples
+
+### Remove A Directory
 
 - always recursive
 
@@ -56,7 +85,7 @@ PhpFs\Directory::remove('./path/to/directory');
 ```
 
 
-### Empty a directory
+### Empty A Directory
 
 - always recursive
 
