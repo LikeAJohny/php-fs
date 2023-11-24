@@ -15,13 +15,7 @@ class File
 {
     public static function create(string $file): bool
     {
-        $resource = fopen($file, 'wb');
-
-        if (!$resource) {
-            throw FileException::fileNotCreated($file);
-        }
-
-        return true;
+        return (bool)fopen($file, 'wb');
     }
 
     public static function exists(string $file): bool
