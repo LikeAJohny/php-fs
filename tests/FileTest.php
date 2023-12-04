@@ -8,6 +8,9 @@ use PhpFs\Directory;
 use PhpFs\Exception\FileException;
 use PhpFs\File;
 use PHPUnit\Framework\TestCase;
+use Throwable;
+
+use function var_dump;
 
 class FileTest extends TestCase
 {
@@ -24,7 +27,6 @@ class FileTest extends TestCase
     public function testThrowsExceptionOnCreateError(): void
     {
         $this->expectException(FileException::class);
-
         File::create(self::ARTIFACTS . '/dir-does-not-exist/cool-story-bro.txt');
     }
 
@@ -34,12 +36,38 @@ class FileTest extends TestCase
         $this->assertFalse(File::exists(self::FIXTURES . '/content/second-level.txt'));
     }
 
+    public function testGetsFileInformation(): void
+    {
+        $file = self::ARTIFACTS . '/test.txt';
+        File::create($file, 0644);
+        File::write($file, 'test');
+
+        $info = File::info($file);
+
+        $this->assertEquals(self::ARTIFACTS, $info['dirname']);
+        $this->assertEquals('test.txt', $info['basename']);
+        $this->assertEquals('test', $info['filename']);
+        $this->assertEquals('txt', $info['extension']);
+        $this->assertEquals('text/plain', $info['mime_type']);
+        $this->assertEquals('us-ascii', $info['mime_encoding']);
+        $this->assertEquals('0644', $info['permissions']);
+    }
+
     public function testCanWriteToNewFile(): void
     {
         $file = self::ARTIFACTS . '/cool-story-bro.txt';
         File::create($file);
 
-        $this->assertTrue(File::write($file, 'Tell me more, lol x3'));
+        $this->assertEquals(20, File::write($file, 'Tell me more, lol x3'));
+    }
+
+    public function testThrowsExceptionOnWriteError(): void
+    {
+        $file = self::ARTIFACTS . '/cool-story-bro.txt';
+        File::create($file, 0000);
+
+        $this->expectException(FileException::class);
+        File::write($file, 'Tell me more, lol x3');
     }
 
     public function testCanAppendToExistingFile(): void
@@ -48,7 +76,7 @@ class FileTest extends TestCase
         File::create($file);
         File::write($file, 'Test');
 
-        $this->assertTrue(File::append($file, ' Me'));
+        $this->assertEquals(7, File::append($file, ' Me'));
         $this->assertEquals('Test Me', File::read($file));
     }
 
@@ -58,7 +86,7 @@ class FileTest extends TestCase
         File::create($file);
         File::write($file, 'Me');
 
-        $this->assertTrue(File::prepend($file, 'Test '));
+        $this->assertEquals(7, File::prepend($file, 'Test '));
         $this->assertEquals('Test Me', File::read($file));
     }
 
@@ -72,6 +100,15 @@ class FileTest extends TestCase
             'Tell me more, lol x3',
             File::read($file)
         );
+    }
+
+    public function testThrowsExceptionOnReadError(): void
+    {
+        $file = self::ARTIFACTS . '/cool-story-bro.txt';
+        File::create($file, 0000);
+
+        $this->expectException(FileException::class);
+        File::read($file);
     }
 
     public function testCanRemoveFile(): void
